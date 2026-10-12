@@ -2,7 +2,7 @@ import type { Ant } from "../core/ant";
 import type { Grid } from "../core/grid";
 import type { Simulation } from "../core/simulation";
 import type { Renderer } from "./renderer";
-import { ANT_COLOR, CELL_COLORS, GRID_LINE_COLOR } from "./palette";
+import { ANT_COLORS, CELL_COLORS, GRID_LINE_COLOR } from "./palette";
 
 export class CanvasRenderer implements Renderer {
   private readonly context: CanvasRenderingContext2D;
@@ -19,13 +19,15 @@ export class CanvasRenderer implements Renderer {
   }
 
   render(simulation: Simulation): void {
-    const { grid, ant } = simulation;
+    const { grid, ants } = simulation;
     this.resize(grid);
     this.drawCells(grid);
     this.drawGridLines(grid);
-    if (!simulation.isOver) {
-      this.drawAnt(ant);
-    }
+    ants.forEach((ant, index) => {
+      if (grid.contains(ant.x, ant.y)) {
+        this.drawAnt(ant, ANT_COLORS[index % ANT_COLORS.length]);
+      }
+    });
   }
 
   private resize(grid: Grid): void {
@@ -66,8 +68,8 @@ export class CanvasRenderer implements Renderer {
     this.context.stroke();
   }
 
-  private drawAnt(ant: Ant): void {
-    this.context.fillStyle = ANT_COLOR;
+  private drawAnt(ant: Ant, color: string): void {
+    this.context.fillStyle = color;
     this.context.fillRect(ant.x * this.cellSize, ant.y * this.cellSize, this.cellSize, this.cellSize);
   }
 }

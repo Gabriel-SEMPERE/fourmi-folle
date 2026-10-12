@@ -7,7 +7,15 @@
     <link rel="stylesheet" href="/style/main.css" />
   </head>
   <body>
-    <canvas id="grid"></canvas>
+    <main>
+      <div class="controls">
+        <button id="pause" type="button">Pause</button>
+        <button id="add-ant" type="button">Add ant</button>
+        <button id="save-pdf" type="button">Save as PDF</button>
+        <span>Steps: <strong id="steps">0</strong></span>
+      </div>
+      <canvas id="grid"></canvas>
+    </main>
     <script type="module" src="/src/entries/web.ts"></script>
   </body>
 </html>

@@ -6,29 +6,44 @@ export class Simulation {
 
   constructor(
     readonly grid: Grid,
-    readonly ant: Ant,
+    readonly ants: Ant[],
   ) {}
 
+  addAnt(ant: Ant): void {
+    this.ants.push(ant);
+  }
+
+  get activeAnts(): Ant[] {
+    return this.ants.filter((ant) => this.grid.contains(ant.x, ant.y));
+  }
+
   get isOver(): boolean {
-    return !this.grid.contains(this.ant.x, this.ant.y);
+    return this.activeAnts.length === 0;
   }
 
   step(): void {
-    if (this.isOver) {
+    const ants = this.activeAnts;
+    if (ants.length === 0) {
       return;
     }
 
-    const { x, y } = this.ant;
+    for (const ant of ants) {
+      this.moveAnt(ant);
+    }
+    this.steps++;
+  }
+
+  private moveAnt(ant: Ant): void {
+    const { x, y } = ant;
 
     if (this.grid.get(x, y) === "white") {
-      this.ant.turnRight();
+      ant.turnRight();
       this.grid.set(x, y, "black");
     } else {
-      this.ant.turnLeft();
+      ant.turnLeft();
       this.grid.set(x, y, "white");
     }
 
-    this.ant.moveForward();
-    this.steps++;
+    ant.moveForward();
   }
 }

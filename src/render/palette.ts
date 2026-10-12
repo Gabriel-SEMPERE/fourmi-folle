@@ -6,3 +6,4 @@ export const CELL_COLORS: Record<Cell, string> = {
 };
 
 export const GRID_LINE_COLOR = "#dddddd";
+export const ANT_COLOR = "#e53935";

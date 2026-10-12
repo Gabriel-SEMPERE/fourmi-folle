@@ -1,5 +1,5 @@
-import type { Grid } from "../core/grid";
+import type { Simulation } from "../core/simulation";
 
 export interface Renderer {
-  render(grid: Grid): void;
+  render(simulation: Simulation): void;
 }

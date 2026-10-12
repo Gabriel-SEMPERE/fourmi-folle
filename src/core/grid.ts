@@ -18,9 +18,15 @@ export class Grid {
     this.cells[this.index(x, y)] = cell;
   }
 
+  wrapX(x: number): number {
+    return ((x % this.width) + this.width) % this.width;
+  }
+
+  wrapY(y: number): number {
+    return ((y % this.height) + this.height) % this.height;
+  }
+
   private index(x: number, y: number): number {
-    const wrappedX = ((x % this.width) + this.width) % this.width;
-    const wrappedY = ((y % this.height) + this.height) % this.height;
-    return wrappedY * this.width + wrappedX;
+    return this.wrapY(y) * this.width + this.wrapX(x);
   }
 }

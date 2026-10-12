@@ -1,6 +1,8 @@
+import type { Ant } from "../core/ant";
 import type { Grid } from "../core/grid";
+import type { Simulation } from "../core/simulation";
 import type { Renderer } from "./renderer";
-import { CELL_COLORS, GRID_LINE_COLOR } from "./palette";
+import { ANT_COLOR, CELL_COLORS, GRID_LINE_COLOR } from "./palette";
 
 export class CanvasRenderer implements Renderer {
   private readonly context: CanvasRenderingContext2D;
@@ -16,18 +18,30 @@ export class CanvasRenderer implements Renderer {
     this.context = context;
   }
 
-  render(grid: Grid): void {
-    this.canvas.width = grid.width * this.cellSize;
-    this.canvas.height = grid.height * this.cellSize;
+  render(simulation: Simulation): void {
+    const { grid, ant } = simulation;
+    this.resize(grid);
+    this.drawCells(grid);
+    this.drawGridLines(grid);
+    this.drawAnt(ant);
+  }
 
+  private resize(grid: Grid): void {
+    const width = grid.width * this.cellSize;
+    const height = grid.height * this.cellSize;
+    if (this.canvas.width !== width || this.canvas.height !== height) {
+      this.canvas.width = width;
+      this.canvas.height = height;
+    }
+  }
+
+  private drawCells(grid: Grid): void {
     for (let y = 0; y < grid.height; y++) {
       for (let x = 0; x < grid.width; x++) {
         this.context.fillStyle = CELL_COLORS[grid.get(x, y)];
         this.context.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
       }
     }
-
-    this.drawGridLines(grid);
   }
 
   private drawGridLines(grid: Grid): void {
@@ -48,5 +62,10 @@ export class CanvasRenderer implements Renderer {
     }
 
     this.context.stroke();
+  }
+
+  private drawAnt(ant: Ant): void {
+    this.context.fillStyle = ANT_COLOR;
+    this.context.fillRect(ant.x * this.cellSize, ant.y * this.cellSize, this.cellSize, this.cellSize);
   }
 }

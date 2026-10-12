@@ -1,5 +1,4 @@
-import { DIRECTION_VECTORS, type Direction } from "./direction";
-import type { Grid } from "./grid";
+import { DIRECTION_VECTORS, turnLeft, turnRight, type Direction } from "./direction";
 
 export class Ant {
   constructor(
@@ -8,9 +7,17 @@ export class Ant {
     public direction: Direction = "up",
   ) {}
 
-  moveForward(grid: Grid): void {
+  turnRight(): void {
+    this.direction = turnRight(this.direction);
+  }
+
+  turnLeft(): void {
+    this.direction = turnLeft(this.direction);
+  }
+
+  moveForward(): void {
     const { dx, dy } = DIRECTION_VECTORS[this.direction];
-    this.x = grid.wrapX(this.x + dx);
-    this.y = grid.wrapY(this.y + dy);
+    this.x += dx;
+    this.y += dy;
   }
 }

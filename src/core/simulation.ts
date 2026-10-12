@@ -9,11 +9,26 @@ export class Simulation {
     readonly ant: Ant,
   ) {}
 
+  get isOver(): boolean {
+    return !this.grid.contains(this.ant.x, this.ant.y);
+  }
+
   step(): void {
+    if (this.isOver) {
+      return;
+    }
+
     const { x, y } = this.ant;
-    const cell = this.grid.get(x, y);
-    this.grid.set(x, y, cell === "white" ? "black" : "white");
-    this.ant.moveForward(this.grid);
+
+    if (this.grid.get(x, y) === "white") {
+      this.ant.turnRight();
+      this.grid.set(x, y, "black");
+    } else {
+      this.ant.turnLeft();
+      this.grid.set(x, y, "white");
+    }
+
+    this.ant.moveForward();
     this.steps++;
   }
 }

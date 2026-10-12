@@ -6,3 +6,8 @@ body {
   justify-content: center;
   background: #eaffe4;
 }
+
+canvas {
+  max-width: 95vw;
+  max-height: 95vh;
+}

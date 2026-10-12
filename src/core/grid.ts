@@ -10,6 +10,10 @@ export class Grid {
     this.cells = new Array<Cell>(width * height).fill("white");
   }
 
+  contains(x: number, y: number): boolean {
+    return x >= 0 && x < this.width && y >= 0 && y < this.height;
+  }
+
   get(x: number, y: number): Cell {
     return this.cells[this.index(x, y)];
   }
@@ -18,15 +22,10 @@ export class Grid {
     this.cells[this.index(x, y)] = cell;
   }
 
-  wrapX(x: number): number {
-    return ((x % this.width) + this.width) % this.width;
-  }
-
-  wrapY(y: number): number {
-    return ((y % this.height) + this.height) % this.height;
-  }
-
   private index(x: number, y: number): number {
-    return this.wrapY(y) * this.width + this.wrapX(x);
+    if (!this.contains(x, y)) {
+      throw new RangeError(`Cell (${x}, ${y}) is outside the grid`);
+    }
+    return y * this.width + x;
   }
 }

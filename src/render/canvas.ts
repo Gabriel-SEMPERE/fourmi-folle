@@ -23,7 +23,9 @@ export class CanvasRenderer implements Renderer {
     this.resize(grid);
     this.drawCells(grid);
     this.drawGridLines(grid);
-    this.drawAnt(ant);
+    if (!simulation.isOver) {
+      this.drawAnt(ant);
+    }
   }
 
   private resize(grid: Grid): void {

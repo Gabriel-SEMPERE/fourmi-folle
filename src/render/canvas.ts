@@ -1,10 +1,9 @@
 import type { Ant } from "../core/ant";
 import type { Grid } from "../core/grid";
 import type { Simulation } from "../core/simulation";
-import type { Renderer } from "./renderer";
 import { ANT_COLORS, CELL_COLORS, GRID_LINE_COLOR } from "./palette";
 
-export class CanvasRenderer implements Renderer {
+export class CanvasRenderer {
   private readonly context: CanvasRenderingContext2D;
 
   constructor(

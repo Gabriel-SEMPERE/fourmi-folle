@@ -42,7 +42,7 @@ The grid does not have a cyclic edge effect. When an ant leaves the grid, it dis
 Requirements: [Node.js](https://nodejs.org/) 18 or later.
 
 ```bash
-git clone https://github.com/GabriemSEMP/fourmi-folle.git
+git clone https://github.com/Gabriel-SEMPERE/fourmi-folle
 cd fourmi-folle
 npm install
 npm run dev
